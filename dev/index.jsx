@@ -5,7 +5,7 @@ var Buttonfy = React.createClass({
     render: function() {
         return (
             <div>
-                <button type={this.props.behaviorer}> {this.props.children}!</button>
+                <button type={this.props.behavior}> {this.props.children}!</button>
             </div>
         );
     }
