@@ -9591,49 +9591,41 @@ var AddPerson = _react2.default.createClass({
 var ShowPeople = _react2.default.createClass({
     displayName: "ShowPeople",
 
-    addAccount: function addAccount() {
-        this.setState({
-            click: true
-        });
-    },
 
     render: function render() {
-        var _this = this;
-
         var listOfPerson = persons.map(function (p, i) {
             return _react2.default.createElement(
                 "tr",
                 { key: i, ref: "palceholder" },
                 _react2.default.createElement(
                     "th",
-                    { key: i },
-                    i
+                    null,
+                    i + 1
                 ),
                 _react2.default.createElement(
                     "td",
-                    { key: i },
+                    null,
                     p.firstName
                 ),
                 _react2.default.createElement(
                     "td",
-                    { key: i },
+                    null,
                     p.lastName
                 ),
                 _react2.default.createElement(
                     "td",
                     null,
-                    _react2.default.createElement("input", { key: i, ref: "account" })
+                    _react2.default.createElement("input", { ref: "account" })
                 ),
                 _react2.default.createElement(
                     "td",
                     null,
                     _react2.default.createElement(
                         "button",
-                        { key: i, ref: "accountButton", onClick: _this.addAccount.bind(_this) },
+                        { ref: "accountButton" },
                         "Add Account"
                     )
-                ),
-                _this.state.click ? p.newAccount = refs.addAccount().value : null
+                )
             );
         });
         return _react2.default.createElement(
@@ -9686,14 +9678,14 @@ var DisplayPeople = function (_React$Component) {
     function DisplayPeople() {
         _classCallCheck(this, DisplayPeople);
 
-        var _this2 = _possibleConstructorReturn(this, (DisplayPeople.__proto__ || Object.getPrototypeOf(DisplayPeople)).call(this));
+        var _this = _possibleConstructorReturn(this, (DisplayPeople.__proto__ || Object.getPrototypeOf(DisplayPeople)).call(this));
 
-        _this2.state = {
+        _this.state = {
             clicked: false
         };
 
-        _this2.handleClick = _this2.handleClick.bind(_this2);
-        return _this2;
+        _this.handleClick = _this.handleClick.bind(_this);
+        return _this;
     }
 
     _createClass(DisplayPeople, [{

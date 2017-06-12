@@ -37,22 +37,16 @@ var AddPerson = React.createClass({
 });
 
 var ShowPeople = React.createClass({
-    addAccount: function () {
-        this.setState({
-            click: true
-        });
-    },
-
+    
     render: function () {
             var listOfPerson = persons.map((p, i) => {
                 return (
                     <tr key={i}ref="palceholder">
-                        <th key={i}>{i}</th>
-                        <td key={i}>{p.firstName}</td>
-                        <td key={i}>{p.lastName}</td>
-                        <td><input key={i} ref="account"/></td>
-                        <td><button key={i} ref="accountButton" onClick={this.addAccount.bind(this)}>Add Account</button></td>
-                        {this.state.click ? p.newAccount = refs.addAccount().value : null}
+                        <th>{i+1}</th>
+                        <td>{p.firstName}</td>
+                        <td>{p.lastName}</td>
+                        <td><input ref="account"/></td>
+                        <td><button ref="accountButton" >Add Account</button></td>
                     </tr>
                 );
             });
