@@ -1,16 +1,15 @@
-#wrapper {
 
-}
-
-#container{
+.wrapper{
     margin-top: 65px;
 }
- p:hover {
-    background-color: chartreuse;
-    font-size: large;
-    cursor: pointer;
+
+.wrapper .form-control {
+    margin: 0 2% 0 2%;
 }
 
-.diff {
-    padding-left: 50px;
+.wrapper .row {
+    margin-bottom: 20px;
+}
+.wrapper .btn {
+    margin: 0 0 0 2%;
 }

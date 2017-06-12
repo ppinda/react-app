@@ -9,7 +9,7 @@ var DEV = path.resolve(__dirname, "dev");
 var OUTPUT = path.resolve(__dirname, "output");
 
 var config = {
-    entry: DEV + "/index.jsx",
+    entry:DEV + "/index.jsx",
     output: {
         path: OUTPUT,
         filename: "myCode.js"

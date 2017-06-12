@@ -9530,6 +9530,8 @@ module.exports = __webpack_require__(19);
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(81);
 
 var _react2 = _interopRequireDefault(_react);
@@ -9540,16 +9542,44 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Buttonfy = _react2.default.createClass({
-    displayName: "Buttonfy",
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var persons = [];
+
+var AddPerson = _react2.default.createClass({
+    displayName: "AddPerson",
+
+    getInitialState: function getInitialState() {
+        return { input: '' };
+    },
+
+    handleChange: function handleChange(e) {
+        this.setState({ input: e.target.value });
+    },
+
+    handleClickAdd: function handleClickAdd() {
+        var name = {};
+        name.firstName = this.refs.firstName.value.toString();
+        name.lastName = this.refs.lastName.value.toString();
+        persons.push(name);
+        this.refs.firstName.value = "";
+        this.refs.lastName.value = "";
+        console.log(persons);
+    },
 
     render: function render() {
         return _react2.default.createElement(
             "div",
-            null,
+            { className: "row" },
+            _react2.default.createElement("input", { className: "form-control col-md-4", ref: "firstName", placeholder: "First name" }),
+            _react2.default.createElement("input", { className: "form-control col-md-4", ref: "lastName", placeholder: "Last name" }),
             _react2.default.createElement(
                 "button",
-                { type: this.props.behaviorer },
+                { onClick: this.handleClickAdd, className: "btn btn-outline-success col-md-2", type: this.props.behavior },
                 " ",
                 this.props.children,
                 "!"
@@ -9558,25 +9588,161 @@ var Buttonfy = _react2.default.createClass({
     }
 });
 
+var ShowPeople = _react2.default.createClass({
+    displayName: "ShowPeople",
+
+    addAccount: function addAccount() {
+        this.setState({
+            click: true
+        });
+    },
+
+    render: function render() {
+        var _this = this;
+
+        var listOfPerson = persons.map(function (p, i) {
+            return _react2.default.createElement(
+                "tr",
+                { key: i, ref: "palceholder" },
+                _react2.default.createElement(
+                    "th",
+                    { key: i },
+                    i
+                ),
+                _react2.default.createElement(
+                    "td",
+                    { key: i },
+                    p.firstName
+                ),
+                _react2.default.createElement(
+                    "td",
+                    { key: i },
+                    p.lastName
+                ),
+                _react2.default.createElement(
+                    "td",
+                    null,
+                    _react2.default.createElement("input", { key: i, ref: "account" })
+                ),
+                _react2.default.createElement(
+                    "td",
+                    null,
+                    _react2.default.createElement(
+                        "button",
+                        { key: i, ref: "accountButton", onClick: _this.addAccount.bind(_this) },
+                        "Add Account"
+                    )
+                ),
+                _this.state.click ? p.newAccount = refs.addAccount().value : null
+            );
+        });
+        return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+                "table",
+                { className: "table table-striped table-inverse" },
+                _react2.default.createElement(
+                    "thead",
+                    null,
+                    _react2.default.createElement(
+                        "tr",
+                        null,
+                        _react2.default.createElement(
+                            "th",
+                            null,
+                            "#"
+                        ),
+                        _react2.default.createElement(
+                            "th",
+                            null,
+                            "First Name"
+                        ),
+                        _react2.default.createElement(
+                            "th",
+                            null,
+                            "Last Name"
+                        ),
+                        _react2.default.createElement(
+                            "th",
+                            null,
+                            "Username"
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "tbody",
+                    null,
+                    listOfPerson
+                )
+            )
+        );
+    }
+});
+
+var DisplayPeople = function (_React$Component) {
+    _inherits(DisplayPeople, _React$Component);
+
+    function DisplayPeople() {
+        _classCallCheck(this, DisplayPeople);
+
+        var _this2 = _possibleConstructorReturn(this, (DisplayPeople.__proto__ || Object.getPrototypeOf(DisplayPeople)).call(this));
+
+        _this2.state = {
+            clicked: false
+        };
+
+        _this2.handleClick = _this2.handleClick.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(DisplayPeople, [{
+        key: "handleClick",
+        value: function handleClick() {
+            this.setState({
+                clicked: true
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    { className: "row" },
+                    _react2.default.createElement(
+                        "button",
+                        { onClick: this.handleClick, className: "btn btn-outline-success col-md-2", type: this.props.behavior },
+                        "Search"
+                    )
+                ),
+                this.state.clicked && persons.length != 0 ? _react2.default.createElement(ShowPeople, null) : _react2.default.createElement(
+                    "div",
+                    { className: "alert alert-warning" },
+                    "Empty"
+                )
+            );
+        }
+    }]);
+
+    return DisplayPeople;
+}(_react2.default.Component);
+
+;
+
+// Render class
 _reactDom2.default.render(_react2.default.createElement(
     "div",
-    null,
+    { className: "container-fluid" },
     _react2.default.createElement(
-        Buttonfy,
-        { behaviorer: "submit" },
-        "Submit"
+        AddPerson,
+        { behavior: "submit" },
+        "Add person"
     ),
-    _react2.default.createElement(
-        Buttonfy,
-        { behaviorer: "reset" },
-        "Reset"
-    ),
-    _react2.default.createElement(
-        Buttonfy,
-        { behaviorer: "submit" },
-        "Submit"
-    )
-), document.querySelector("#container"));
+    _react2.default.createElement(DisplayPeople, null)
+), document.querySelector("#add-person-container"));
 
 /***/ }),
 /* 83 */
