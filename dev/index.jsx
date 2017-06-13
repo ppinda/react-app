@@ -37,7 +37,7 @@ var AddPerson = React.createClass({
 });
 
 var ShowPeople = React.createClass({
-    
+
     render: function () {
             var listOfPerson = persons.map((p, i) => {
                 return (
