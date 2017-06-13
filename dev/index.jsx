@@ -38,15 +38,30 @@ var AddPerson = React.createClass({
 
 var ShowPeople = React.createClass({
 
+    addAccountDetails : function (i) {
+
+        var val = Array.prototype.filter.call(
+            document.getElementsByTagName('input'),
+            (el) => el.getAttribute('classid') == i
+        );
+
+        var output = val[0].value;
+        persons[i].addAccoutDetails = output;
+        console.log(persons);
+        val[0].value = '';
+        val.color = 'grey';
+        val.disabled = true;
+    },
+
     render: function () {
             var listOfPerson = persons.map((p, i) => {
                 return (
-                    <tr key={i}ref="palceholder">
-                        <th>{i+1}</th>
+                    <tr key={i}ref="keyRef">
+                        <th>{i}</th>
                         <td>{p.firstName}</td>
                         <td>{p.lastName}</td>
-                        <td><input ref="account"/></td>
-                        <td><button ref="accountButton" >Add Account</button></td>
+                        <td><input classID={i} ref="accountInput"/></td>
+                        <td><button ref="accountButton" onClick={this.addAccountDetails.bind(this,i)} >Add Account</button></td>
                     </tr>
                 );
             });
