@@ -9593,17 +9593,27 @@ var ShowPeople = _react2.default.createClass({
 
 
     addAccountDetails: function addAccountDetails(i) {
+        // Get input value from DOM
 
-        var val = Array.prototype.filter.call(document.getElementsByTagName('input'), function (el) {
-            return el.getAttribute('classid') == i;
-        });
+        function getFieldValue(element) {
+            var val = Array.prototype.filter.call(document.getElementsByTagName(element), function (el) {
+                return el.getAttribute('classid') == i;
+            });
+            return val;
+        }
+        // Get the values from input field
+        var output = getFieldValue('input')[0].value;
 
-        var output = val[0].value;
-        persons[i].addAccoutDetails = output;
-        console.log(persons);
-        val[0].value = '';
-        val.color = 'grey';
-        val.disabled = true;
+        // Check if there is an accountDetails property
+        if (!persons[i].hasOwnProperty('accoutDetails') && output.length !== 0) {
+            persons[i].accoutDetails = output;
+            getFieldValue('input')[0].style.display = 'none';
+            console.log(persons);
+            //getFieldValue('td')[0].className = 'check-tick';
+            getFieldValue('td')[0].innerHTML = '<span class="check-tick">' + persons[i].firstName + '</span>';
+        } else {
+            alert('There is no value man!');
+        }
     },
 
     render: function render() {
@@ -9612,7 +9622,7 @@ var ShowPeople = _react2.default.createClass({
         var listOfPerson = persons.map(function (p, i) {
             return _react2.default.createElement(
                 "tr",
-                { key: i, ref: "keyRef" },
+                { key: i, ref: "keyRef", className: "result-search" },
                 _react2.default.createElement(
                     "th",
                     null,
@@ -9630,7 +9640,7 @@ var ShowPeople = _react2.default.createClass({
                 ),
                 _react2.default.createElement(
                     "td",
-                    null,
+                    { className: "tick-account", classID: i },
                     _react2.default.createElement("input", { classID: i, ref: "accountInput" })
                 ),
                 _react2.default.createElement(
@@ -9638,7 +9648,7 @@ var ShowPeople = _react2.default.createClass({
                     null,
                     _react2.default.createElement(
                         "button",
-                        { ref: "accountButton", onClick: _this.addAccountDetails.bind(_this, i) },
+                        { classID: i, ref: "accountButton", onClick: _this.addAccountDetails.bind(_this, i) },
                         "Add Account"
                     )
                 )
@@ -9646,10 +9656,10 @@ var ShowPeople = _react2.default.createClass({
         });
         return _react2.default.createElement(
             "div",
-            { className: "row" },
+            { id: "sectionTable", className: "row" },
             _react2.default.createElement(
                 "table",
-                { className: "table table-striped table-inverse" },
+                { className: " table table-striped table-inverse " },
                 _react2.default.createElement(
                     "thead",
                     null,
@@ -9675,6 +9685,11 @@ var ShowPeople = _react2.default.createClass({
                             "th",
                             null,
                             "Username"
+                        ),
+                        _react2.default.createElement(
+                            "th",
+                            null,
+                            "Account"
                         )
                     )
                 ),
@@ -9722,7 +9737,7 @@ var DisplayPeople = function (_React$Component) {
                     { className: "row" },
                     _react2.default.createElement(
                         "button",
-                        { onClick: this.handleClick, className: "btn btn-outline-success col-md-2", type: this.props.behavior },
+                        { id: "searchButton", onClick: this.handleClick, className: "btn btn-outline-success col-md-2", type: this.props.behavior },
                         "Search"
                     )
                 ),

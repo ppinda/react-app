@@ -39,41 +39,54 @@ var AddPerson = React.createClass({
 var ShowPeople = React.createClass({
 
     addAccountDetails : function (i) {
+        // Get input value from DOM
 
-        var val = Array.prototype.filter.call(
-            document.getElementsByTagName('input'),
-            (el) => el.getAttribute('classid') == i
-        );
+        function getFieldValue(element) {
+            var val = Array.prototype.filter.call(
+                document.getElementsByTagName(element),
+                (el) => el.getAttribute('classid') == i
+            );
+            return val;
+        }
+        // Get the values from input field
+        var output = getFieldValue('input')[0].value;
 
-        var output = val[0].value;
-        persons[i].addAccoutDetails = output;
-        console.log(persons);
-        val[0].value = '';
-        val.color = 'grey';
-        val.disabled = true;
+        // Check if there is an accountDetails property
+        if(!persons[i].hasOwnProperty('accoutDetails') && output.length !== 0){
+            persons[i].accoutDetails = output;
+            getFieldValue('input')[0].style.display = 'none';
+            console.log(persons);
+            //getFieldValue('td')[0].className = 'check-tick';
+            getFieldValue('td')[0].innerHTML ='<span class="check-tick">'+ persons[i].firstName+ '</span>';
+
+        }
+        else {
+            alert('There is no value man!');
+            }
     },
 
     render: function () {
             var listOfPerson = persons.map((p, i) => {
                 return (
-                    <tr key={i}ref="keyRef">
+                    <tr key={i}ref="keyRef" className="result-search">
                         <th>{i}</th>
                         <td>{p.firstName}</td>
                         <td>{p.lastName}</td>
-                        <td><input classID={i} ref="accountInput"/></td>
-                        <td><button ref="accountButton" onClick={this.addAccountDetails.bind(this,i)} >Add Account</button></td>
+                        <td className="tick-account" classID={i}><input classID={i} ref="accountInput"/></td>
+                        <td><button classID={i}  ref="accountButton" onClick={this.addAccountDetails.bind(this,i)} >Add Account</button></td>
                     </tr>
                 );
             });
             return (
-                <div className="row">
-                    <table className="table table-striped table-inverse">
+                <div id="sectionTable" className="row">
+                    <table className=" table table-striped table-inverse ">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Username</th>
+                            <th>Account</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -107,7 +120,7 @@ class DisplayPeople extends React.Component{
         return (
             <div>
                 <div className="row">
-                    <button onClick={this.handleClick} className="btn btn-outline-success col-md-2" type={this.props.behavior}>Search</button>
+                    <button id="searchButton" onClick={this.handleClick} className="btn btn-outline-success col-md-2" type={this.props.behavior}>Search</button>
                 </div>
                 {this.state.clicked &&  persons.length!= 0 ? <ShowPeople/> :<div className="alert alert-warning">Empty</div>}
             </div>
